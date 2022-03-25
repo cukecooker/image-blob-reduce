@@ -77,6 +77,7 @@ change).
 
 Options:
 
+- __delExif__ - (default:false) no attach exif to the image blob.
 - __max__ - max allowed image size.
 - __pica `.resize()` options__ - `alpha`, `unsharpAmount`, `unsharpRadius`,
   `unsharpThreshold`, `cancelToken`
