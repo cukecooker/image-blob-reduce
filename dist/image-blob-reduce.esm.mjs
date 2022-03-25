@@ -1222,7 +1222,8 @@ module.exports.can_use_canvas = function can_use_canvas(createCanvas) {
 
 module.exports.cib_can_use_region = function cib_can_use_region() {
   return new Promise(function (resolve) {
-    if (typeof createImageBitmap === 'undefined') {
+    // `Image` check required for use in `ServiceWorker`
+    if (typeof Image === 'undefined' || typeof createImageBitmap === 'undefined') {
       resolve(false);
       return;
     }
@@ -3316,7 +3317,9 @@ function jpeg_rotate_canvas(env) {
 
 function jpeg_attach_orig_segments(env) {
   if (!env.is_jpeg) return Promise.resolve(env);
-
+  if (env.opts && env.opts.delExif) {
+    return Promise.resolve(env);
+  }
   return Promise.all([
     this._getUint8Array(env.blob),
     this._getUint8Array(env.out_blob)
